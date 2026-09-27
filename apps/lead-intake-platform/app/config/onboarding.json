@@ -1,0 +1,62 @@
+{
+  "paymentLinkBase": "",
+  "common": [
+    {
+      "id": "deposit", "label": "Pay your deposit to lock your install date", "owner": "client", "type": "pay", "dueDays": 2,
+      "description": "Secure checkout. Your deposit is fully refundable for 3 business days."
+    },
+    {
+      "id": "site_access", "label": "Site access & preferences", "owner": "client", "type": "form", "dueDays": 3,
+      "fields": [
+        { "id": "access_notes", "label": "Gate codes, pets, parking notes", "type": "textarea" },
+        { "id": "preferred_days", "label": "Preferred work days", "type": "text", "required": true },
+        { "id": "contact_method", "label": "Best way to reach you on install day", "type": "select", "options": ["Text", "Call", "Email"], "required": true }
+      ]
+    },
+    {
+      "id": "photos", "label": "Share a few photos of the work area", "owner": "client", "type": "form", "dueDays": 3,
+      "description": "Paste links (Google Photos, iCloud, Dropbox) — or reply to our text with photos.",
+      "fields": [{ "id": "photo_links", "label": "Photo links", "type": "textarea" }]
+    },
+    { "id": "site_verify", "label": "On-site verification visit", "owner": "team", "type": "schedule", "dueDays": 5 },
+    { "id": "materials", "label": "Materials ordered", "owner": "team", "type": "info", "dueDays": 10 },
+    { "id": "kickoff", "label": "Install date confirmed", "owner": "team", "type": "info", "dueDays": 12 }
+  ],
+  "services": {
+    "roofing": [
+      {
+        "id": "hoa", "label": "HOA approval details", "owner": "client", "type": "form", "dueDays": 5,
+        "fields": [
+          { "id": "has_hoa", "label": "Do you have an HOA?", "type": "select", "options": ["No", "Yes"], "required": true },
+          { "id": "hoa_contact", "label": "HOA contact (if yes)", "type": "text" }
+        ]
+      },
+      {
+        "id": "insurance_docs", "label": "Insurance claim number & adjuster info", "owner": "client", "type": "form", "dueDays": 3,
+        "when": { "field": "insurance_claim", "value": "yes" },
+        "fields": [
+          { "id": "claim_number", "label": "Claim number", "type": "text", "required": true },
+          { "id": "carrier", "label": "Insurance carrier", "type": "text", "required": true },
+          { "id": "adjuster", "label": "Adjuster name / phone", "type": "text" }
+        ]
+      }
+    ],
+    "hvac": [
+      {
+        "id": "thermostat", "label": "Thermostat preference", "owner": "client", "type": "form", "dueDays": 4,
+        "fields": [{ "id": "thermostat", "label": "Thermostat", "type": "select", "options": ["Keep current", "Smart (Ecobee)", "Smart (Nest)"], "required": true }]
+      },
+      { "id": "load_calc", "label": "Manual J load calculation", "owner": "team", "type": "info", "dueDays": 5 }
+    ],
+    "remodel": [
+      {
+        "id": "inspiration", "label": "Share your inspiration board", "owner": "client", "type": "form", "dueDays": 5,
+        "fields": [
+          { "id": "pinterest", "label": "Pinterest/Houzz link", "type": "text" },
+          { "id": "must_haves", "label": "Top 3 must-haves", "type": "textarea", "required": true }
+        ]
+      },
+      { "id": "design_session", "label": "3D design & selections session", "owner": "team", "type": "schedule", "dueDays": 7 }
+    ]
+  }
+}
