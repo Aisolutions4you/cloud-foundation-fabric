@@ -1,0 +1,230 @@
+{
+  "id": "field-services-intake",
+  "title": "Get your instant estimate",
+  "steps": [
+    { "id": "start", "title": "What can we help with?", "questions": ["service", "name"] },
+    { "id": "roof", "title": "About your roof", "showIf": { "field": "service", "value": "roofing" }, "questions": ["roof_issue", "insurance_claim", "roof_size", "roof_material", "stories"] },
+    { "id": "hvac", "title": "About your system", "showIf": { "field": "service", "value": "hvac" }, "questions": ["hvac_system", "hvac_tons", "hvac_zones", "ductwork"] },
+    { "id": "remodel", "title": "About your project", "showIf": { "field": "service", "value": "remodel" }, "questions": ["remodel_room", "remodel_sqft", "remodel_finish"] },
+    { "id": "property", "title": "About the property", "questions": ["property_type", "owner", "zip"] },
+    { "id": "timing", "title": "Timing & budget", "questions": ["timeline", "budget", "decision_maker"] },
+    { "id": "contact", "title": "Where should we send your estimate?", "questions": ["email", "phone", "sms_opt_in"] }
+  ],
+  "questions": [
+    {
+      "id": "service", "type": "single", "required": true,
+      "label": "What project are you planning?",
+      "options": [
+        { "value": "roofing", "label": "Roofing", "synonyms": ["roof", "shingles", "leak", "hail"] },
+        { "value": "hvac", "label": "Heating & cooling", "synonyms": ["hvac", "ac", "a/c", "air conditioning", "furnace", "heat pump", "mini split"] },
+        { "value": "remodel", "label": "Kitchen or bath remodel", "synonyms": ["remodel", "renovation", "kitchen", "bathroom", "bath"] }
+      ]
+    },
+    { "id": "name", "type": "text", "required": true, "label": "Who am I speaking with? (first name is fine)" },
+
+    {
+      "id": "roof_issue", "type": "single", "required": true,
+      "label": "What's going on with the roof?",
+      "options": [
+        { "value": "leak", "label": "Leak / small repair", "synonyms": ["leaking", "drip", "repair"] },
+        { "value": "storm_damage", "label": "Storm or hail damage", "score": 10, "synonyms": ["storm", "hail", "wind"] },
+        { "value": "full_replacement", "label": "Full replacement", "score": 10, "synonyms": ["replace", "replacement", "new roof", "old roof"] },
+        { "value": "inspection", "label": "Just an inspection", "synonyms": ["inspect", "check"] }
+      ]
+    },
+    {
+      "id": "insurance_claim", "type": "single", "required": true,
+      "label": "Are you filing (or planning to file) an insurance claim?",
+      "showIf": { "field": "roof_issue", "value": "storm_damage" },
+      "options": [
+        { "value": "yes", "label": "Yes", "score": 10, "synonyms": ["claim", "insurance"] },
+        { "value": "no", "label": "No / not sure" }
+      ]
+    },
+    {
+      "id": "roof_size", "type": "single", "required": true,
+      "label": "Roughly how big is the home?",
+      "showIf": { "field": "roof_issue", "op": "in", "value": ["storm_damage", "full_replacement"] },
+      "options": [
+        { "value": "small", "label": "Under 1,500 sq ft" },
+        { "value": "medium", "label": "1,500–2,500 sq ft" },
+        { "value": "large", "label": "2,500–3,500 sq ft" },
+        { "value": "xl", "label": "3,500+ sq ft" }
+      ]
+    },
+    {
+      "id": "roof_material", "type": "single", "required": true,
+      "label": "Which roofing material do you want?",
+      "showIf": { "field": "roof_issue", "op": "in", "value": ["storm_damage", "full_replacement"] },
+      "options": [
+        { "value": "asphalt", "label": "Asphalt shingle", "synonyms": ["shingle", "shingles", "asphalt"] },
+        { "value": "metal", "label": "Standing-seam metal", "score": 5, "synonyms": ["metal", "steel"] },
+        { "value": "tile", "label": "Tile", "score": 5, "synonyms": ["tile", "clay", "concrete tile"] }
+      ]
+    },
+    {
+      "id": "stories", "type": "single", "required": true,
+      "label": "How many stories is the home?",
+      "showIf": { "field": "service", "value": "roofing" },
+      "options": [
+        { "value": "1", "label": "1 story", "synonyms": ["one story", "single story", "ranch"] },
+        { "value": "2", "label": "2 stories", "synonyms": ["two story", "two stories"] },
+        { "value": "3", "label": "3+ stories", "synonyms": ["three story", "three stories"] }
+      ]
+    },
+
+    {
+      "id": "hvac_system", "type": "single", "required": true,
+      "label": "Which system are you looking at?",
+      "options": [
+        { "value": "central_ac", "label": "Central A/C", "synonyms": ["central air", "ac", "a/c", "air conditioner"] },
+        { "value": "heat_pump", "label": "Heat pump", "score": 5, "synonyms": ["heat pump"] },
+        { "value": "furnace", "label": "Furnace", "synonyms": ["furnace", "heater", "heating"] },
+        { "value": "mini_split", "label": "Ductless mini-split", "synonyms": ["mini split", "mini-split", "ductless"] }
+      ],
+      "showIf": { "field": "service", "value": "hvac" }
+    },
+    {
+      "id": "hvac_tons", "type": "single", "required": true,
+      "label": "What's the home's square footage?",
+      "showIf": { "field": "hvac_system", "op": "in", "value": ["central_ac", "heat_pump"] },
+      "options": [
+        { "value": "2", "label": "Under 1,200 sq ft" },
+        { "value": "3", "label": "1,200–1,800 sq ft" },
+        { "value": "4", "label": "1,800–2,400 sq ft" },
+        { "value": "5", "label": "2,400+ sq ft" }
+      ]
+    },
+    {
+      "id": "hvac_zones", "type": "number", "required": true, "min": 1, "max": 8, "unitHint": "zones?|rooms?|heads?",
+      "label": "How many rooms/zones need a head unit?",
+      "showIf": { "field": "hvac_system", "value": "mini_split" }
+    },
+    {
+      "id": "ductwork", "type": "single", "required": true,
+      "label": "What about the ductwork?",
+      "showIf": { "field": "hvac_system", "op": "in", "value": ["central_ac", "heat_pump", "furnace"] },
+      "options": [
+        { "value": "keep", "label": "It's fine — keep it" },
+        { "value": "replace", "label": "Replace / it's old", "score": 5 },
+        { "value": "unsure", "label": "Not sure" }
+      ]
+    },
+
+    {
+      "id": "remodel_room", "type": "single", "required": true,
+      "label": "Which room?",
+      "showIf": { "field": "service", "value": "remodel" },
+      "options": [
+        { "value": "kitchen", "label": "Kitchen", "synonyms": ["kitchen"] },
+        { "value": "bathroom", "label": "Bathroom", "synonyms": ["bathroom", "bath", "shower"] }
+      ]
+    },
+    {
+      "id": "remodel_sqft", "type": "number", "required": true, "min": 20, "max": 1000, "unitHint": "sq\\s*ft|sqft|square feet|sf",
+      "label": "About how many square feet is the room?",
+      "showIf": { "field": "service", "value": "remodel" }
+    },
+    {
+      "id": "remodel_finish", "type": "single", "required": true,
+      "label": "Which finish level fits your vision?",
+      "showIf": { "field": "service", "value": "remodel" },
+      "options": [
+        { "value": "standard", "label": "Clean & functional" },
+        { "value": "premium", "label": "Premium upgrades", "score": 5 },
+        { "value": "luxury", "label": "Full luxury", "score": 10 }
+      ]
+    },
+
+    {
+      "id": "property_type", "type": "single", "required": true,
+      "label": "What type of property is it?",
+      "options": [
+        { "value": "single_family", "label": "Single-family home", "synonyms": ["house", "single family"] },
+        { "value": "multi_family", "label": "Townhome / multi-family", "synonyms": ["townhome", "duplex", "condo"] },
+        { "value": "commercial", "label": "Commercial", "score": 10, "synonyms": ["commercial", "business", "office", "warehouse"] }
+      ]
+    },
+    {
+      "id": "owner", "type": "single", "required": true,
+      "label": "Are you the owner of the property?",
+      "options": [
+        { "value": "yes", "label": "Yes, I own it", "score": 20 },
+        { "value": "no", "label": "No, I rent / manage it", "score": -20 }
+      ]
+    },
+    { "id": "zip", "type": "text", "required": true, "pattern": "^\\d{5}$", "patternError": "Enter a 5-digit ZIP", "label": "What's the property ZIP code?" },
+
+    {
+      "id": "timeline", "type": "single", "required": true,
+      "label": "When do you want the work done?",
+      "options": [
+        { "value": "asap", "label": "ASAP", "score": 25, "synonyms": ["asap", "urgent", "emergency", "right away", "immediately"] },
+        { "value": "30_days", "label": "Within 30 days", "score": 15, "synonyms": ["this month", "few weeks"] },
+        { "value": "90_days", "label": "1–3 months", "score": 5, "synonyms": ["couple months", "few months"] },
+        { "value": "researching", "label": "Just researching", "score": -10, "synonyms": ["researching", "just looking", "browsing"] }
+      ]
+    },
+    {
+      "id": "budget", "type": "single", "required": true,
+      "label": "What budget range are you working with?",
+      "options": [
+        { "value": "under_10k", "label": "Under $10k" },
+        { "value": "10_25k", "label": "$10k–$25k", "score": 5 },
+        { "value": "25_50k", "label": "$25k–$50k", "score": 10 },
+        { "value": "50k_plus", "label": "$50k+", "score": 15 },
+        { "value": "unsure", "label": "Not sure yet" }
+      ]
+    },
+    {
+      "id": "decision_maker", "type": "single", "required": true,
+      "label": "Is anyone else involved in the decision?",
+      "options": [
+        { "value": "just_me", "label": "Just me", "score": 10 },
+        { "value": "spouse_partner", "label": "Me + spouse/partner", "score": 5 },
+        { "value": "other", "label": "Someone else decides" }
+      ]
+    },
+
+    { "id": "email", "type": "email", "required": true, "label": "What's the best email for your estimate?" },
+    { "id": "phone", "type": "phone", "required": true, "label": "And the best mobile number in case we need to confirm details?" },
+    {
+      "id": "sms_opt_in", "type": "single", "required": false,
+      "label": "OK to text you updates about your estimate?",
+      "options": [
+        { "value": "yes", "label": "Yes, text me" },
+        { "value": "no", "label": "Email only" }
+      ]
+    }
+  ],
+  "scoring": {
+    "rules": [
+      { "when": { "all": [{ "field": "service", "value": "remodel" }, { "field": "budget", "value": "under_10k" }] }, "points": -15, "reason": "Budget below typical remodel" },
+      { "when": { "all": [{ "field": "roof_issue", "value": "leak" }, { "field": "timeline", "value": "asap" }] }, "points": 10, "reason": "Active leak, urgent" },
+      { "when": { "field": "sms_opt_in", "value": "yes" }, "points": 5, "reason": "SMS opt-in" }
+    ],
+    "tiers": [
+      { "min": 45, "label": "hot" },
+      { "min": 20, "label": "warm" },
+      { "min": -1000, "label": "cold" }
+    ]
+  },
+  "outcomes": [
+    {
+      "when": { "field": "zip", "op": "regex", "value": "^(?!7[5-9])" },
+      "action": "disqualify",
+      "message": "Thanks for reaching out! That ZIP is outside our service area right now, so we'd hate to overpromise. We'll let you know if we expand your way."
+    },
+    {
+      "when": { "field": "property_type", "value": "commercial" },
+      "action": "book_call",
+      "message": "Commercial projects get a custom site assessment so pricing is exact. Pick a time that works and a project manager will walk the property with you."
+    },
+    {
+      "when": { "field": "roof_issue", "value": "inspection" },
+      "action": "estimate",
+      "message": ""
+    },
+    { "when": true, "action": "estimate", "message": "" }
+  ]
+}

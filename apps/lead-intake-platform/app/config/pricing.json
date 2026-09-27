@@ -1,0 +1,92 @@
+{
+  "currency": "USD",
+  "taxRate": 0,
+  "depositPct": 0.25,
+  "roundTo": 5,
+  "validDays": 14,
+  "rangeSpread": { "low": 0.9, "high": 1.15 },
+  "financing": { "months": 60, "apr": 0.0999 },
+  "disclaimer": "Instant estimates are based on the details you shared and typical site conditions. Your final quote is confirmed after a free on-site verification.",
+  "guarantee": "Price-lock guarantee: if our on-site verification finds your quote was off because of our estimate, we honor the lower number. Plus a 10-year workmanship warranty.",
+  "terms": [
+    "25% deposit reserves your install date; balance due on completion.",
+    "Quote valid for 14 days. Material price changes after that may apply.",
+    "Permits, disposal and clean-up are included where listed.",
+    "Cancel within 3 business days of signing for a full deposit refund."
+  ],
+  "packages": [
+    {
+      "id": "essential", "label": "Essential", "factor": 1.0,
+      "tagline": "Code-compliant, manufacturer-warrantied, done right.",
+      "includes": ["Licensed & insured crew", "Manufacturer warranty", "Permit + clean-up"]
+    },
+    {
+      "id": "preferred", "label": "Preferred", "factor": 1.12, "recommended": true,
+      "tagline": "Most popular: upgraded materials and priority scheduling.",
+      "includes": ["Everything in Essential", "Upgraded materials", "Priority scheduling", "10-yr workmanship warranty"]
+    },
+    {
+      "id": "elite", "label": "Elite", "factor": 1.28,
+      "tagline": "Top-tier materials, white-glove service, lifetime peace of mind.",
+      "includes": ["Everything in Preferred", "Premium materials", "Dedicated project manager", "Lifetime workmanship warranty", "Annual maintenance visit"]
+    }
+  ],
+  "discounts": [
+    { "when": { "field": "timeline", "value": "90_days" }, "pct": 0.03, "label": "Flexible-scheduling discount (3%)" }
+  ],
+  "globalMultipliers": [
+    { "when": { "field": "property_type", "value": "multi_family" }, "factor": 1.08, "label": "Multi-unit access & coordination" },
+    { "when": { "field": "timeline", "value": "asap" }, "factor": 1.05, "label": "Priority crew scheduling" }
+  ],
+  "services": {
+    "roofing": {
+      "label": "Roofing project",
+      "minimum": 450,
+      "assumptions": ["Single layer tear-off", "Standard pitch (up to 8/12)", "Decking replaced only where rotten (billed separately at $85/sheet)"],
+      "lineItems": [
+        { "id": "inspection", "label": "Full roof inspection + drone report", "when": { "field": "roof_issue", "value": "inspection" }, "rate": 199 },
+        { "id": "leak_repair", "label": "Leak diagnosis & repair", "when": { "field": "roof_issue", "value": "leak" }, "rate": 650 },
+        { "id": "tearoff", "label": "Tear-off & disposal", "unit": "sq ft", "when": { "field": "roof_issue", "op": "in", "value": ["storm_damage", "full_replacement"] }, "qtyField": "roof_size", "qtyMap": { "small": 1700, "medium": 2600, "large": 3700, "xl": 4800 }, "rate": 1.25 },
+        { "id": "asphalt", "label": "Architectural asphalt shingles installed", "unit": "sq ft", "when": { "field": "roof_material", "value": "asphalt" }, "qtyField": "roof_size", "qtyMap": { "small": 1700, "medium": 2600, "large": 3700, "xl": 4800 }, "rate": 4.25 },
+        { "id": "metal", "label": "Standing-seam metal installed", "unit": "sq ft", "when": { "field": "roof_material", "value": "metal" }, "qtyField": "roof_size", "qtyMap": { "small": 1700, "medium": 2600, "large": 3700, "xl": 4800 }, "rate": 9.5 },
+        { "id": "tile", "label": "Tile roof installed", "unit": "sq ft", "when": { "field": "roof_material", "value": "tile" }, "qtyField": "roof_size", "qtyMap": { "small": 1700, "medium": 2600, "large": 3700, "xl": 4800 }, "rate": 12 },
+        { "id": "permit", "label": "Permit, dumpster & magnetic nail sweep", "when": { "field": "roof_issue", "op": "in", "value": ["storm_damage", "full_replacement"] }, "rate": 450 },
+        { "id": "claim_support", "label": "Insurance claim documentation & adjuster meeting", "when": { "field": "insurance_claim", "value": "yes" }, "rate": 0 }
+      ],
+      "multipliers": [
+        { "when": { "field": "stories", "value": "2" }, "factor": 1.1, "label": "Two-story access & safety" },
+        { "when": { "field": "stories", "value": "3" }, "factor": 1.2, "label": "Three-story access & safety" }
+      ]
+    },
+    "hvac": {
+      "label": "Heating & cooling install",
+      "minimum": 3500,
+      "assumptions": ["Replacement in existing location", "Standard electrical within 25 ft", "Manual J load calc confirms final sizing"],
+      "lineItems": [
+        { "id": "central_ac", "label": "High-efficiency A/C condenser + coil", "unit": "ton", "when": { "field": "hvac_system", "value": "central_ac" }, "qtyField": "hvac_tons", "defaultQty": 3, "rate": 1800 },
+        { "id": "heat_pump", "label": "Variable-speed heat pump system", "unit": "ton", "when": { "field": "hvac_system", "value": "heat_pump" }, "qtyField": "hvac_tons", "defaultQty": 3, "rate": 2200 },
+        { "id": "furnace", "label": "96% AFUE gas furnace", "when": { "field": "hvac_system", "value": "furnace" }, "rate": 4200 },
+        { "id": "mini_split", "label": "Ductless mini-split head + line set", "unit": "zone", "when": { "field": "hvac_system", "value": "mini_split" }, "qtyField": "hvac_zones", "defaultQty": 1, "rate": 3200 },
+        { "id": "labor", "label": "Installation, startup & commissioning", "rate": 2500 },
+        { "id": "ducts", "label": "New sealed ductwork", "when": { "field": "ductwork", "value": "replace" }, "rate": 4500 },
+        { "id": "duct_test", "label": "Duct leakage test", "when": { "field": "ductwork", "value": "unsure" }, "rate": 250 },
+        { "id": "permit", "label": "Permit & haul-away of old equipment", "rate": 350 }
+      ]
+    },
+    "remodel": {
+      "label": "Remodel",
+      "minimum": 12000,
+      "assumptions": ["No structural wall moves", "Plumbing stays in current location", "Appliances/fixtures allowance included at Essential level"],
+      "lineItems": [
+        { "id": "kitchen", "label": "Kitchen remodel (cabinets, counters, tile, labor)", "unit": "sq ft", "when": { "field": "remodel_room", "value": "kitchen" }, "qtyField": "remodel_sqft", "rate": 150 },
+        { "id": "bathroom", "label": "Bathroom remodel (tile, vanity, fixtures, labor)", "unit": "sq ft", "when": { "field": "remodel_room", "value": "bathroom" }, "qtyField": "remodel_sqft", "rate": 250 },
+        { "id": "design", "label": "3D design + selections session", "rate": 1500 },
+        { "id": "permit", "label": "Permits & inspections", "rate": 800 }
+      ],
+      "multipliers": [
+        { "when": { "field": "remodel_finish", "value": "premium" }, "factor": 1.3, "label": "Premium finish level" },
+        { "when": { "field": "remodel_finish", "value": "luxury" }, "factor": 1.7, "label": "Luxury finish level" }
+      ]
+    }
+  }
+}

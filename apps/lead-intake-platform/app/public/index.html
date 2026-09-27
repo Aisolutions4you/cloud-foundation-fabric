@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instant Estimate</title>
+  <meta name="description" content="Get a real price in 2 minutes. Instant estimates, e-sign quotes and onboarding — 24/7.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#/" class="brand" id="brand">Instant Estimate</a>
+    <nav>
+      <a href="#/estimate" class="btn btn-ghost">Estimate wizard</a>
+      <button class="btn btn-primary" data-open-chat>Talk to an advisor</button>
+    </nav>
+  </header>
+
+  <main id="view" aria-live="polite"></main>
+
+  <!-- Conversational AI widget (also used alone in ?embed=1 mode) -->
+  <aside id="chat" class="chat" aria-label="Chat with an advisor" hidden>
+    <div class="chat-head">
+      <div>
+        <strong id="chat-name">Advisor</strong>
+        <span class="online">Online 24/7</span>
+      </div>
+      <button class="icon-btn" id="chat-close" aria-label="Close chat">×</button>
+    </div>
+    <div class="chat-log" id="chat-log"></div>
+    <div class="chips" id="chat-chips"></div>
+    <form class="chat-input" id="chat-form" autocomplete="off">
+      <input id="chat-text" placeholder="Type your answer…" aria-label="Message" maxlength="2000">
+      <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+  </aside>
+  <button class="chat-launcher" id="chat-launcher" data-open-chat aria-label="Open chat">💬 Get a price now</button>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
